@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SimuladorStreaming
+namespace SimuladorDeStreaming
 {
     class Program
     {
@@ -24,17 +24,17 @@ namespace SimuladorStreaming
             do
             {
                 Console.Clear(); //Este comando limpia la pantalla, en este caso el menu cada vez que se vuelve a repetir el ciclo.
-                DibujarLinea();
+                DibujarLinea(); //Función con for
                 Console.WriteLine("   SISTEMA DE PLATAFORMA DE STREAMING");
                 DibujarLinea();
-                Console.WriteLine("1. Evaluar nuevo contenido");
-                Console.WriteLine("2.Mostrar reglas del sistema");
-                Console.WriteLine("3.Ver estadisticas");
-                Console.WriteLine("4.Salir");
-                Console.Write("\n----Ingrese una opcion----");
+                Console.WriteLine("1-------Evaluar nuevo contenido");
+                Console.WriteLine("2-------Mostrar reglas del sistema");
+                Console.WriteLine("3-------Ver estadisticas");
+                Console.WriteLine("4-------Salir");
+                Console.Write("\n----Selecciona una opcion----");
 
                 // Esto es una validacion directa que si no es número se va volver a pedir
-                while (!int.TryParse(Console.ReadLine(), out opcion))
+                while (!int.TryParse(Console.ReadLine(), out opcion)) //basicamente puse este while porque sin el, el programa se crasheaba al poner una letra o un dato invalido
                 {
                     Console.Write("Error: Ingresa un numero valido: ");
                 }
@@ -42,12 +42,12 @@ namespace SimuladorStreaming
                 // 3. El ciclo while valida que la opción no sea un numero fuera del rango
                 while (opcion < 1 || opcion > 4)
                 {
-                    Console.Write("Error. Ingrese un numero del 1 al 5.");
+                    Console.Write("Error. Ingrese un numero del 1 al 4: ");
                     while (!int.TryParse(Console.ReadLine(), out opcion)) //Mientras no se pueda convertir lo que el usuario escribio en un número entero, se va a repetir el ciclo. 
                     {                                                     //Basicamente si el usuario escribe un numero valido lo gaurada en la opcion,
-                                                                          //"!" hace que si el TryParse falló (false) porque escribieron letras o no escribieron nada,
-                                                                          //lo convierte en true y el ciclo se repite, mostrando el mensaje de dato invalido
-                        Console.Write("Error: Ingresa un numero valido.");
+                                                                          //"!" hace que si el TryParse falló (false) porque escribieron letras o dejaron un vacio,
+                                                                          //lo convierte en true y el ciclo se repite, mostrando el mensaje de "Dato inválido"
+                        Console.Write("Error: Ingresa un numero válido: ");
                     }
                 }
 
@@ -66,20 +66,15 @@ namespace SimuladorStreaming
                     case 4:
                         Console.WriteLine("\nCerrando el sistema...");
                         break;
-
                 }
-                // Pausa antes de limpiar la pantalla
                 if (opcion != 4)
                 {
                     Console.WriteLine("\nPresione ENTER para continuar...");
                     Console.ReadLine();
                 }
-
+                
                 //Mientras que la opcion sea diferente que 4 se ejecutara 
-
-
             } while (opcion != 4);
-
         }
         // 5. Este ciclo for solo va a diujar una linea que es para decoracion en el menu
         static void DibujarLinea()
@@ -98,11 +93,11 @@ namespace SimuladorStreaming
             Console.WriteLine("--- EVALUAR CONTENIDO ---");
 
             // Aqui se pedira al usuario que seleccione una opcion de manera sencilla, con numeros
-            Console.Write("Tipo ---->       1----Pelicula, 2----Serie, 3----Documental, 4----En vivo ");
+            Console.Write("Tipo ---->       1----Pelicula   2----Serie   3----Documental   4----En vivo ");
             int tipo;
             while (!int.TryParse(Console.ReadLine(), out tipo))
             {
-                Console.Write("Dato inválido. Ingrese el número del tipo. ");
+                Console.Write("Dato invalido. Ingrese el número del tipo: ");
             }
 
             Console.Write("Duracion en minutos: ");
@@ -112,7 +107,7 @@ namespace SimuladorStreaming
                 Console.Write("Dato invalido. Ingrese la duracion en numeros. ");
             }
 
-            Console.Write("Clasificacion ---->      1----Todo publico, 2---- +13, 3---- +18 ");
+            Console.Write("Clasificacion ---->      1----Todo publico   2---- +13   3---- +18 ");
             int clasificacion;
             while (!int.TryParse(Console.ReadLine(), out clasificacion))
             {
@@ -126,11 +121,11 @@ namespace SimuladorStreaming
                 Console.Write("Dato inválido. Ingrese la hora en numeros. ");
             }
 
-            Console.Write("Nivel de producción ---->     1---- Baja, 2---- Media, 3---- Alta ");
+            Console.Write("Nivel de producción ---->     1---- Baja   2---- Media   3---- Alta ");
             int produccion;
             while (!int.TryParse(Console.ReadLine(), out produccion))
             {
-                Console.Write("Dato invqlido. Ingrese el número de la produccion. ");
+                Console.Write("Dato invalido. Ingrese el número de la produccion. ");
             }
 
             totalEvaluados++;
@@ -159,7 +154,7 @@ namespace SimuladorStreaming
             if (tipo == 1 && (duracion < 60 || duracion > 180))
             {
                 esValido = false;
-                motivoRechazo = "Duracion de película incorrecta. Debe ser 60-180 min.";
+                motivoRechazo = "Duracion de pelicula incorrecta. Debe ser 60-180 min.";
             }
             else if (tipo == 2 && (duracion < 20 || duracion > 90))
             {
@@ -193,7 +188,6 @@ namespace SimuladorStreaming
             }
             else
             {
-
                 // Calcular el nivel de impacto si fue aprobado tecnicamente
                 int nivelImpacto = 1;
 
@@ -245,7 +239,9 @@ namespace SimuladorStreaming
         static void MostrarReglas()
         {
             Console.Clear();
+            DibujarLinea();
             Console.WriteLine("--- REGLAS DEL SISTEMA ---");
+            DibujarLinea();
             Console.WriteLine("1---- HORARIOS ----");
             Console.WriteLine("   Todo publico: Cualquier hora.");
             Console.WriteLine("   +13: De 6 a 22 hrs.");
@@ -257,7 +253,9 @@ namespace SimuladorStreaming
         static void MostrarEstadisticas()
         {
             Console.Clear();
+            DibujarLinea();
             Console.WriteLine("---- ESTADISTICAS DE HOY ----");
+            DibujarLinea();
             Console.WriteLine("Total evaluados: " + totalEvaluados);
             Console.WriteLine("Publicados: " + publicados);
             Console.WriteLine("Publicados con ajustes: " + publicadosConAjustes);
@@ -281,4 +279,3 @@ namespace SimuladorStreaming
         }
     }
 }
-
