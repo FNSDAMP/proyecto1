@@ -133,7 +133,65 @@ namespace SimuladorStreaming
             bool esValido = true;
             string motivoRechazo = "";
 
+            // 7. Uso de if anidados. Aqui van a estar las condiciones para validar el horario segun la clasificacion
+            if (clasificacion == 2)
+            {
+                if (hora < 6 || hora > 22)
+                {
+                    esValido = false;
+                    motivoRechazo = "El horario para +13 es solo de 6 a 22 hrs.";
+                }
+            }
+            else if (clasificacion == 3)
+            {
+                if (hora > 5 && hora < 22)
+                {
+                    esValido = false;
+                    motivoRechazo = "El horario para +18 es solo de 22 a 5 hrs.";
+                }
+            }
 
+            // 8. Uso de if anidados. Aqui se va a validar la duración según el tipo
+            if (tipo == 1 && (duracion < 60 || duracion > 180))
+            {
+                esValido = false;
+                motivoRechazo = "Duracion de película incorrecta. Debe ser 60-180 min.";
+            }
+            else if (tipo == 2 && (duracion < 20 || duracion > 90))
+            {
+                esValido = false;
+                motivoRechazo = "Duracion de serie incorrecta. Debe ser 20-90 min.";
+            }
+            else if (tipo == 3 && (duracion < 30 || duracion > 120))
+            {
+                esValido = false;
+                motivoRechazo = "Duracion de documental incorrecta. Debe ser 30-120 min.";
+            }
+            else if (tipo == 4 && (duracion < 30 || duracion > 240))
+            {
+                esValido = false;
+                motivoRechazo = "Duracion de evento en vivo incorrecta. Debe ser 30-240 min.";
+            }
+
+            // Validar produccion
+            if (produccion == 1 && clasificacion == 3)
+            {
+                esValido = false;
+                motivoRechazo = "Produccion baja no permitida para clasificacion +18.";
+            }
+
+            // Decision final
+            if (esValido == false)
+            {
+                Console.WriteLine("\n>>> RESULTADO: RECHAZADO");
+                Console.WriteLine("Motivo: " + motivoRechazo);
+                rechazados++;
+            }
+            else
+            {
+
+
+            }
         }
     }
 }
