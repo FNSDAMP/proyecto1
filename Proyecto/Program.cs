@@ -237,7 +237,44 @@ namespace SimuladorStreaming
         }
 
 
+        // Funciones que muestran informacion
+        static void MostrarReglas()
+        {
+            Console.Clear();
+            Console.WriteLine("--- REGLAS DEL SISTEMA ---");
+            Console.WriteLine("1---- HORARIOS ----");
+            Console.WriteLine("   Todo publico: Cualquier hora.");
+            Console.WriteLine("   +13: De 6 a 22 hrs.");
+            Console.WriteLine("   +18: De 22 a 5 hrs.");
+            Console.WriteLine("2---- PRODUCCION ----:");
+            Console.WriteLine("   Baja: No permitida para +18.");
+        }
 
+        static void MostrarEstadisticas()
+        {
+            Console.Clear();
+            Console.WriteLine("---- ESTADISTICAS DE HOY ----");
+            Console.WriteLine("Total evaluados: " + totalEvaluados);
+            Console.WriteLine("Publicados: " + publicados);
+            Console.WriteLine("Publicados con ajustes: " + publicadosConAjustes);
+            Console.WriteLine("Rechazados: " + rechazados);
+            Console.WriteLine("En Revision: " + enRevision);
+
+            if (totalEvaluados > 0)
+            {
+                // Calcular impacto predominante
+                string predominante = "Empate";
+                if (impactoBajo > impactoMedio && impactoBajo > impactoAlto) predominante = "Bajo";
+                if (impactoMedio > impactoBajo && impactoMedio > impactoAlto) predominante = "Medio";
+                if (impactoAlto > impactoBajo && impactoAlto > impactoMedio) predominante = "Alto";
+
+                Console.WriteLine("Impacto predominante: " + predominante);
+            }
+            else
+            {
+                Console.WriteLine("Aun no hay datos para mostrar.");
+            }
+        }
     }
 }
-   
+
