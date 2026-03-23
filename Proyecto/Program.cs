@@ -11,6 +11,10 @@ namespace SimuladorStreaming
         static int rechazados = 0;
         static int enRevision = 0;
 
+        static int impactoBajo = 0;
+        static int impactoMedio = 0;
+        static int impactoAlto = 0;
+
         // Funcion principal
         static void Main()
         {
