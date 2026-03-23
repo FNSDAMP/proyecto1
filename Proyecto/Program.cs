@@ -190,8 +190,54 @@ namespace SimuladorStreaming
             else
             {
 
+                // Calcular el nivel de impacto si fue aprobado tecnicamente
+                int nivelImpacto = 1;
 
+                if (produccion == 1 && duracion < 60)
+                {
+                    nivelImpacto = 1; // Bajo
+                }
+                if (produccion == 2 || (duracion >= 60 && duracion <= 120))
+                {
+                    nivelImpacto = 2; // Medio
+                }
+                if (produccion == 3 || duracion > 120 || hora >= 20)
+                {
+                    nivelImpacto = 3; // Alto
+                }
+
+                // Contadores para guardar para las estadisticas
+                if (nivelImpacto == 1) impactoBajo++;
+                if (nivelImpacto == 2) impactoMedio++;
+                if (nivelImpacto == 3) impactoAlto++;
+
+                Console.WriteLine("\nEl contenido cumple las reglas tecnicas.");
+
+                // Decision según el impacto
+                if (nivelImpacto == 3)
+                {
+                    Console.WriteLine("Resultado: Enviar a revision");
+                    Console.WriteLine("Motivo: El contenido tiene un impacto alto.");
+                    enRevision++;
+                }
+                else if (nivelImpacto == 2 && produccion == 2)
+                {
+                    Console.WriteLine("Resultado: Publicar con ajustes");
+                    Console.WriteLine("Motivo: Impacto medio, pero requiere de ajustes en produccion.");
+                    publicados++;
+                    publicadosConAjustes++;
+                }
+                else
+                {
+                    Console.WriteLine("Resultado: Publicar");
+                    Console.WriteLine("Motivo: Impacto bajo o medio sin problemas.");
+                    publicados++;
+                }
             }
         }
+
+
+
     }
 }
+   
