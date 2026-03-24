@@ -93,7 +93,7 @@ namespace SimuladorDeStreaming
             Console.WriteLine("--- EVALUAR CONTENIDO ---");
 
             // Aqui se pedira al usuario que seleccione una opcion de manera sencilla, con numeros
-            Console.Write("Tipo ---->       1----Pelicula   2----Serie   3----Documental   4----En vivo ");
+            Console.Write("Tipo ---->       1----Pelicula  |  2----Serie  |  3----Documental  |  4----En vivo ");
             int tipo;
             while (!int.TryParse(Console.ReadLine(), out tipo))
             {
@@ -107,7 +107,7 @@ namespace SimuladorDeStreaming
                 Console.Write("Dato invalido. Ingrese la duracion en numeros. ");
             }
 
-            Console.Write("Clasificacion ---->      1----Todo publico   2---- +13   3---- +18 ");
+            Console.Write("Clasificacion ---->      1----Todo publico  |  2---- +13  |  3---- +18 ");
             int clasificacion;
             while (!int.TryParse(Console.ReadLine(), out clasificacion))
             {
@@ -121,7 +121,7 @@ namespace SimuladorDeStreaming
                 Console.Write("Dato inválido. Ingrese la hora en numeros. ");
             }
 
-            Console.Write("Nivel de producción ---->     1---- Baja   2---- Media   3---- Alta ");
+            Console.Write("Nivel de producción ---->     1---- Baja  |  2---- Media  |  3---- Alta ");
             int produccion;
             while (!int.TryParse(Console.ReadLine(), out produccion))
             {
@@ -131,6 +131,8 @@ namespace SimuladorDeStreaming
             totalEvaluados++;
             bool esValido = true;
             string motivoRechazo = "";
+
+
 
             // 7. Uso de if anidados. Aqui van a estar las condiciones para validar el horario segun la clasificacion
             if (clasificacion == 2)
@@ -215,7 +217,7 @@ namespace SimuladorDeStreaming
                 if (nivelImpacto == 3)
                 {
                     Console.WriteLine("Resultado: Enviar a revision");
-                    Console.WriteLine("Motivo: El contenido tiene un impacto alto.");
+                    Console.WriteLine("Motivo: Cumple reglas tecnicas, pero el contenido tiene un impacto alto.");
                     enRevision++;
                 }
                 else if (nivelImpacto == 2 && produccion == 2)
@@ -228,7 +230,7 @@ namespace SimuladorDeStreaming
                 else
                 {
                     Console.WriteLine("Resultado: Publicar");
-                    Console.WriteLine("Motivo: Impacto bajo o medio sin problemas.");
+                    Console.WriteLine("Motivo: Cumple todas las reglas tecnicas y su impacto es bajo o medio.");
                     publicados++;
                 }
             }
