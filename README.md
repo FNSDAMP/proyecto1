@@ -30,3 +30,5 @@ Validación de Reglas: El programa aplica filtros lógicos para comprobar:
 • Cálculo de Impacto: Véase si el contenido es de impacto Bajo, Medio o Alto como resultado de la producción, la duración y la hora estelar (Prime Time).
 • Decisión Final: El programa emite un veredicto: Publicar, Publicar con Modificaciones, Enviar para Revisión (alto impacto) o Rechazado.
 • Estadísticas: Finalmente genera un reporte acumulado de todo lo procesado a lo largo de la jornada para la administración y que, a su vez, servirá como base de decisiones.
+
+link del video: https://youtu.be/j_Wnb3aCeYg    
