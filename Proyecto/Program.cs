@@ -256,48 +256,8 @@ namespace SimuladorDeStreaming
             Console.WriteLine("   +18: De 22 a 5 hrs.");
             Console.WriteLine("2 ----------- PRODUCCION ----------:");
             Console.WriteLine("   Baja: No permitida para +18.");
-        }
-
-        static void MostrarEstadisticas()
-        {
-            {
-                Console.Clear();
-                DibujarLinea();
-                Console.WriteLine("         REPORTE DE RENDIMIENTO");
-                DibujarLinea();
-                Console.WriteLine($"Total Evaluados:    {totalEvaluados}");
-                Console.WriteLine($"Publicados:         {publicados}");
-                Console.WriteLine($"Rechazados:         {rechazados}");
-                Console.WriteLine($"En Revisión:        {enRevision}");
-                DibujarLinea();
-
-                if (totalEvaluados > 0)
-                {
-                    // Calculo de porcentajes
-                    double porcPub = (double)publicados / totalEvaluados * 100;
-                    double porcRech = (double)rechazados / totalEvaluados * 100;
-                    double porcRev = (double)enRevision / totalEvaluados * 100;
-
-                    Console.WriteLine("DISTRIBUCIÓN PORCENTUAL:");
-                    Console.WriteLine($"- Publicados:    {porcPub:F2}%");
-                    Console.WriteLine($"- Rechazados:    {porcRech:F2}%");
-                    Console.WriteLine($"- En Revisión:   {porcRev:F2}%");
-                }
-                else
-                {
-                    Console.WriteLine("No hay datos para calcular porcentajes.");
-                }
-                DibujarLinea();
-
-                string predominante = "Empate";
-                if (impactoAlto > impactoMedio && impactoAlto > impactoBajo) predominante = "ALTO";
-                else if (impactoMedio > impactoAlto && impactoMedio > impactoBajo) predominante = "MEDIO";
-                else if (impactoBajo > impactoAlto && impactoBajo > impactoMedio) predominante = "BAJO";
-
-                Console.WriteLine($"Tendencia de Impacto: {predominante}");
-            }
-
-            static void MostrarEstadisticas()
+        }     
+           static void MostrarEstadisticas()
             {
                 Console.Clear();
                 DibujarLinea();
@@ -334,7 +294,7 @@ namespace SimuladorDeStreaming
 
                 Console.WriteLine($"Tendencia de Impacto: {predominante}");
             }
-        }
+        
             //FUNCION PARA REINICIAR ESTADISTICAS
             static void ReiniciarEstadisticas()
             {
