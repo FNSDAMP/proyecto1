@@ -30,7 +30,8 @@ namespace SimuladorDeStreaming
                 Console.WriteLine("1-------Evaluar nuevo contenido");
                 Console.WriteLine("2-------Mostrar reglas del sistema");
                 Console.WriteLine("3-------Ver estadisticas");
-                Console.WriteLine("4-------Salir");
+                Console.WriteLine("4-------Reinciar estadisticas");
+                Console.WriteLine("5-------Salir");
                 Console.Write("\n----Selecciona una opcion----");
 
                 // Esto es una validacion directa que si no es número se va volver a pedir
@@ -40,9 +41,9 @@ namespace SimuladorDeStreaming
                 }
 
                 // 3. El ciclo while valida que la opción no sea un numero fuera del rango
-                while (opcion < 1 || opcion > 4)
+                while (opcion < 1 || opcion > 5)
                 {
-                    Console.Write("Error. Ingrese un numero del 1 al 4: ");
+                    Console.Write("Error. Ingrese un numero del 1 al 5: ");
                     while (!int.TryParse(Console.ReadLine(), out opcion)) //Mientras no se pueda convertir lo que el usuario escribio en un número entero, se va a repetir el ciclo. 
                     {                                                     //Basicamente si el usuario escribe un numero valido lo gaurada en la opcion,
                                                                           //"!" hace que si el TryParse falló (false) porque escribieron letras o dejaron un vacio,
@@ -64,17 +65,20 @@ namespace SimuladorDeStreaming
                         MostrarEstadisticas();
                         break;
                     case 4:
+                        ReiniciarEstadisticas();
+                        break;
+                    case 5:
                         Console.WriteLine("\nCerrando el sistema...");
                         break;
                 }
-                if (opcion != 4)
+                if (opcion != 5)
                 {
                     Console.WriteLine("\nPresione ENTER para continuar...");
                     Console.ReadLine();
                 }
-                
+
                 //Mientras que la opcion sea diferente que 4 se ejecutara 
-            } while (opcion != 4);
+            } while (opcion != 5);
         }
         // 5. Este ciclo for solo va a diujar una linea que es para decoracion en el menu
         static void DibujarLinea()
@@ -90,10 +94,12 @@ namespace SimuladorDeStreaming
         static void EvaluarContenido()
         {
             Console.Clear();
-            Console.WriteLine("--- EVALUAR CONTENIDO ---");
+            DibujarLinea();
+            Console.WriteLine("------------- EVALUAR CONTENIDO -------------");
+            DibujarLinea();
 
             // Aqui se pedira al usuario que seleccione una opcion de manera sencilla, con numeros
-            Console.Write("Tipo ---->       1----Pelicula  |  2----Serie  |  3----Documental  |  4----En vivo ");
+            Console.Write("1----Pelicula  |  2----Serie  |  3----Documental  |  4----En vivo ");
             int tipo;
             while (!int.TryParse(Console.ReadLine(), out tipo))
             {
@@ -201,7 +207,7 @@ namespace SimuladorDeStreaming
                 {
                     nivelImpacto = 2; // Medio
                 }
-                if (produccion == 3 || duracion > 120 || hora >= 20)
+                if (produccion == 3 || (duracion > 120 || (hora >= 20 && hora <= 23)))
                 {
                     nivelImpacto = 3; // Alto
                 }
@@ -242,42 +248,113 @@ namespace SimuladorDeStreaming
         {
             Console.Clear();
             DibujarLinea();
-            Console.WriteLine("--- REGLAS DEL SISTEMA ---");
+            Console.WriteLine("------------ REGLAS DEL SISTEMA -00---------");
             DibujarLinea();
-            Console.WriteLine("1---- HORARIOS ----");
+            Console.WriteLine("1 ----------- HORARIOS ------------");
             Console.WriteLine("   Todo publico: Cualquier hora.");
             Console.WriteLine("   +13: De 6 a 22 hrs.");
             Console.WriteLine("   +18: De 22 a 5 hrs.");
-            Console.WriteLine("2---- PRODUCCION ----:");
+            Console.WriteLine("2 ----------- PRODUCCION ----------:");
             Console.WriteLine("   Baja: No permitida para +18.");
         }
 
         static void MostrarEstadisticas()
         {
-            Console.Clear();
-            DibujarLinea();
-            Console.WriteLine("---- ESTADISTICAS DE HOY ----");
-            DibujarLinea();
-            Console.WriteLine("Total evaluados: " + totalEvaluados);
-            Console.WriteLine("Publicados: " + publicados);
-            Console.WriteLine("Publicados con ajustes: " + publicadosConAjustes);
-            Console.WriteLine("Rechazados: " + rechazados);
-            Console.WriteLine("En Revision: " + enRevision);
-
-            if (totalEvaluados > 0)
             {
-                // Calcular impacto predominante
+                Console.Clear();
+                DibujarLinea();
+                Console.WriteLine("         REPORTE DE RENDIMIENTO");
+                DibujarLinea();
+                Console.WriteLine($"Total Evaluados:    {totalEvaluados}");
+                Console.WriteLine($"Publicados:         {publicados}");
+                Console.WriteLine($"Rechazados:         {rechazados}");
+                Console.WriteLine($"En Revisión:        {enRevision}");
+                DibujarLinea();
+
+                if (totalEvaluados > 0)
+                {
+                    // Calculo de porcentajes
+                    double porcPub = (double)publicados / totalEvaluados * 100;
+                    double porcRech = (double)rechazados / totalEvaluados * 100;
+                    double porcRev = (double)enRevision / totalEvaluados * 100;
+
+                    Console.WriteLine("DISTRIBUCIÓN PORCENTUAL:");
+                    Console.WriteLine($"- Publicados:    {porcPub:F2}%");
+                    Console.WriteLine($"- Rechazados:    {porcRech:F2}%");
+                    Console.WriteLine($"- En Revisión:   {porcRev:F2}%");
+                }
+                else
+                {
+                    Console.WriteLine("No hay datos para calcular porcentajes.");
+                }
+                DibujarLinea();
+
                 string predominante = "Empate";
-                if (impactoBajo > impactoMedio && impactoBajo > impactoAlto) predominante = "Bajo";
-                if (impactoMedio > impactoBajo && impactoMedio > impactoAlto) predominante = "Medio";
-                if (impactoAlto > impactoBajo && impactoAlto > impactoMedio) predominante = "Alto";
+                if (impactoAlto > impactoMedio && impactoAlto > impactoBajo) predominante = "ALTO";
+                else if (impactoMedio > impactoAlto && impactoMedio > impactoBajo) predominante = "MEDIO";
+                else if (impactoBajo > impactoAlto && impactoBajo > impactoMedio) predominante = "BAJO";
 
-                Console.WriteLine("Impacto predominante: " + predominante);
+                Console.WriteLine($"Tendencia de Impacto: {predominante}");
             }
-            else
+
+            static void MostrarEstadisticas()
             {
-                Console.WriteLine("Aun no hay datos para mostrar.");
+                Console.Clear();
+                DibujarLinea();
+                Console.WriteLine("----------REPORTE DE RENDIMIENTO");
+                DibujarLinea();
+                Console.WriteLine($"Total Evaluados:    {totalEvaluados}");
+                Console.WriteLine($"Publicados:         {publicados}");
+                Console.WriteLine($"Rechazados:         {rechazados}");
+                Console.WriteLine($"En Revisión:        {enRevision}");
+                DibujarLinea();
+
+                if (totalEvaluados > 0)
+                {
+                    // porcentajes
+                    double porcPub = (double)publicados / totalEvaluados * 100;
+                    double porcRech = (double)rechazados / totalEvaluados * 100;
+                    double porcRev = (double)enRevision / totalEvaluados * 100;
+
+                    Console.WriteLine("DISTRIBUCIÓN PORCENTUAL:");
+                    Console.WriteLine($"- Publicados:    {porcPub:F2}%"); //f2 separa el nombre de las variables de las intrecciones
+                    Console.WriteLine($"- Rechazados:    {porcRech:F2}%");
+                    Console.WriteLine($"- En Revisión:   {porcRev:F2}%");
+                }
+                else
+                {
+                    Console.WriteLine("No hay datos para calcular porcentajes.");
+                }
+                DibujarLinea();
+
+                string predominante = "Empate";
+                if (impactoAlto > impactoMedio && impactoAlto > impactoBajo) predominante = "ALTO";
+                else if (impactoMedio > impactoAlto && impactoMedio > impactoBajo) predominante = "MEDIO";
+                else if (impactoBajo > impactoAlto && impactoBajo > impactoMedio) predominante = "BAJO";
+
+                Console.WriteLine($"Tendencia de Impacto: {predominante}");
             }
         }
+            //FUNCION PARA REINICIAR ESTADISTICAS
+            static void ReiniciarEstadisticas()
+            {
+                Console.Write("Estas seguro que desea borrar todos los datos? (S/N): ");
+                string confirmacion = Console.ReadLine().ToUpper();
+                if (confirmacion == "S")
+                {
+                    totalEvaluados = 0;
+                    publicados = 0;
+                    rechazados = 0;
+                    enRevision = 0;
+                    impactoAlto = 0;
+                    impactoMedio = 0;
+                    impactoBajo = 0;
+                    Console.WriteLine("Estadísticas reiniciadas con éxito.");
+                }
+                else
+                {
+                    Console.WriteLine("Operación cancelada.");
+                }
+            }
+        } 
     }
-}
